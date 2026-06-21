@@ -1,8 +1,8 @@
-name: Build EXE
+name: Build Windows EXE
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
@@ -10,12 +10,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
@@ -26,7 +27,7 @@ jobs:
         pyinstaller --onefile --windowed --name "Оптимизатор_Раскроя" cutting_optimizer.py
 
     - name: Upload EXE
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Оптимизатор_Раскроя
         path: dist/Оптимизатор_Раскроя.exe
